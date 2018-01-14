@@ -2,7 +2,7 @@
 
     session_start();
     error_reporting(E_ALL & ~E_NOTICE);
-    
+
     require_once 'database/database.class.php';
     require_once 'database/auth.class.php';
     require_once 'database/user.class.php';
@@ -55,7 +55,7 @@
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="<?php echo Helper::getBaseUrl() ?>">Notes</a>
+          <a class="navbar-brand" href="<?php echo Helper::getBaseUrl() ?>">Notes Hub</a>
         </div>
         <ul class="nav navbar-nav">
             <li class="<?php echo (Helper::getPageName() == 'index.php' ? 'active' : '') ?>">

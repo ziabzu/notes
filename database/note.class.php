@@ -1,12 +1,8 @@
 <?php
 
-require_once 'model.class.php';
+class Note {
 
-class Note extends Model {
-
-	//private static db;
 	private $id = null;
-	private $_userId = 1;
 	private $_mysqli = null;
 	private $_table = 'notes';
 

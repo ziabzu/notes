@@ -1,7 +1,6 @@
 
 <?php require_once 'header.inc.php' ?>
                         
-<h2>Notes</h2>
 <div class='container-fluid'>
 
 	<?php 

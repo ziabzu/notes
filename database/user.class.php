@@ -1,10 +1,8 @@
 <?php
 
-require_once 'model.class.php';
-
 // Must be singleton class
 
-class User extends Model {
+class User {
 
 	private $_id = null;
 	private $_email = null;
@@ -37,9 +35,6 @@ class User extends Model {
         if ($user) {
 
             $this->_user = $user;
-
-            //$_SESSION['user_id'] = $user->id;
-
             $_SESSION['user'] = serialize($user);
             
             return $user->id;
@@ -214,29 +209,6 @@ class User extends Model {
 		return array('status' => $res, 'mysql_insert_id' => (is_null($this->_id)) ? $this->_mysqli->insert_id : null);
 
 	}
-
-	/*public function login($email, $password) {
-
-		if ($this->_mysqli->connect_errno) die("Failed to connect to MySQL: " . $this->_mysqli->connect_error);
-
-		$sql = "SELECT * FROM `users` WHERE `email` = " . $email . " and `password` = '" . $password. "' order by `id` DESC";
-
-		$res = $this->_mysqli->query($sql);
-
-		if (!$res) {
-
-		    echo "Failed to run query: (" . $this->_mysqli->errno . ") " . $this->_mysqli->error;
-
-		} else {
-
-			$this->saveSession();
-
-		}
-
-		return $res;
-
-	}
-	*/
 
 	public function logOut() {
 
