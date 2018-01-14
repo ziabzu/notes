@@ -36,6 +36,8 @@ var Note = (function () {
                             var html = getNoteRowHTML(data['data'], $('#note').val());
 
                             $('#notes-list').prepend(html).fadeIn('slow');
+                            $('#note').val('');
+                            
                         } else { // Edited one saved
                             $('#note-text-' + id).html(text);
                             cancelEdit(id);
