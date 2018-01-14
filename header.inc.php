@@ -23,11 +23,16 @@
 
         <title>Note Storage</title>
 
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+        rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
+        crossorigin="anonymous">
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" 
+        crossorigin="anonymous"></script>
 
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" 
+        crossorigin="anonymous"></script>
 
 
         <link href="css/global.css" rel="stylesheet">
@@ -65,16 +70,16 @@
 
         <ul class="nav navbar-nav  navbar-right">
             <?php if (Auth::isLoggedIn()) { ?>
-                 <input type='hidden' id='user-loggedin' value='1' />
                 <li><a href="logout.php">Log Out</a></li>
             <?php } else { ?>
-                <input type='hidden' id='user-loggedin' value='0' />
                 <li class='<?php echo (Helper::getPageName() == 'login.php' ? 'active' : '') ?>"'>
                     <a href="<?php echo Helper::getBaseUrl() ?>login.php">Login</a></li>
                 <li class='<?php echo (Helper::getPageName() == 'resgister.php' ? 'active' : '') ?>"'>
                     <a href="<?php echo Helper::getBaseUrl() ?>register.php">Register</a></li>
             <?php } ?>
         </ul>
+
+        <input type='hidden' id='user-loggedin' value='<?php echo (Auth::isLoggedIn() ? 1 : 0); ?>' />
 
       </div>
     </nav>
@@ -87,10 +92,9 @@
                 <div class="well-">
 
 <?php if (isset($_GET['message'])) { ?>
-
     <div class="alert alert-info">
-       <?php echo $_GET['message']; ?>
+        <?php echo $_GET['message']; ?>
         <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
     </div>
 
-<?php } ?>
+<?php }

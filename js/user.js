@@ -2,17 +2,18 @@
 
 // module pattern to avoid conflicts
 
-var User = (function() {
+var User = (function () {
 
-    function isPasswordMatches() {
+    function isPasswordMatches()
+    {
 
-    	return ($('#pass1').val() == $('#pass2').val()) ? true : false;
+        return ($('#pass1').val() == $('#pass2').val()) ? true : false;
 
     }
-    	
+        
     return {
 
-        isPasswordMatches: function() {
+        isPasswordMatches: function () {
 
             isPasswordMatches();
 
@@ -20,5 +21,6 @@ var User = (function() {
     };
 
 })();
+
 
 

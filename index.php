@@ -3,19 +3,14 @@
                         
 <div class='container-fluid'>
 
-	<?php 
-		if (Auth::isLoggedIn()) {
+    <?php
+    if (Auth::isLoggedIn()) {
+        require_once 'views/addNote.inc.php';
+    } else {
+        require_once 'views/login.inc.php';
+    }
 
-			require_once 'views/addNote.inc.php';
-			
-		} else {
-
-			require_once 'views/login.inc.php';
-
-
-		}
-
-	?>
+    ?>
 
     <ul class="list-group" id='notes-list'></ul>
 

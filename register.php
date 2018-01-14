@@ -4,4 +4,4 @@
 
 <?php include 'views/register.inc.php' ?>
 
-<?php require_once 'footer.inc.php' ?>
+<?php require_once 'footer.inc.php'

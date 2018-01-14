@@ -1,42 +1,40 @@
 <?php
 
-class Helper {
+class Helper
+{
 
 
-	/**
-	* return current page name e.g register.php etc
-	*/
-	public static function getPageName() {
+    /**
+    * return current page name e.g register.php etc
+    */
+    public static function getPageName()
+    {
 
-		return basename($_SERVER['PHP_SELF']);
-		
-	} 
+        return basename($_SERVER['PHP_SELF']);
+    }
 
-	public static function getBaseUrl() {
+    public static function getBaseUrl()
+    {
 
-		// Taken from stackoverlfow https://stackoverflow.com/questions/2820723/how-to-get-base-url-with-php
+        // Taken from stackoverlfow https://stackoverflow.com/questions/2820723/how-to-get-base-url-with-php
 
-		if (isset($_SERVER['HTTPS'])) {
+        if (isset($_SERVER['HTTPS'])) {
+            $protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
+        } else {
+            $protocol = 'http';
+        }
 
-        	$protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
+        $requestUri = explode("/", $_SERVER['REQUEST_URI']);
 
-	    } else {
+        return $protocol . "://" . $_SERVER['HTTP_HOST'] . "/" . $requestUri[1] . "/";
+    }
 
-	        $protocol = 'http';
-
-	    }
-
-	    $requestUri = explode("/", $_SERVER['REQUEST_URI']);
-
-	    return $protocol . "://" . $_SERVER['HTTP_HOST'] . "/" . $requestUri[1] . "/";
-
-	}
-
-	/*
-	* timeToString 
-	* Changed datetime object to now and then format Copied my cutom old funciton
-	*/
-	public static function timeToString ($datetime, $full = false) {
+    /*
+    * timeToString 
+    * Changed datetime object to now and then format Copied my cutom old funciton
+    */
+    public static function timeToString($datetime, $full = false)
+    {
 
         $now = new DateTime;
         $ago = new DateTime($datetime);
@@ -56,23 +54,17 @@ class Helper {
         );
 
         foreach ($string as $k => &$v) {
-
             if ($diff->$k) {
-
                 $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
-
             } else {
-
                 unset($string[$k]);
-
             }
-
         }
 
-        if (!$full) $string = array_slice($string, 0, 1);
+        if (!$full) {
+            $string = array_slice($string, 0, 1);
+        }
 
         return $string ? implode(', ', $string) . ' ago' : 'just now';
-
     }
-
 }

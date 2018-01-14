@@ -2,22 +2,24 @@
 
 // A static class just used as authentication related to session
 
-class Auth {
+class Auth
+{
 
-	private static $_user = null;
+    private static $user = null;
 
-    public static function getUser() {
+    public static function getUser()
+    {
 
-    	if (is_null(self::$_user)) self::$_user = unserialize($_SESSION['user']);
+        if (is_null(self::$user)) {
+            self::$user = unserialize($_SESSION['user']);
+        }
 
-    	return self::$_user;
-    	
+        return self::$user;
     }
 
-    public static function isLoggedIn() {
+    public static function isLoggedIn()
+    {
 
-    	return isset($_SESSION['user']) ? true : false;
-
+        return isset($_SESSION['user']) ? true : false;
     }
-	
 }

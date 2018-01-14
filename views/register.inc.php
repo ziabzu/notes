@@ -4,7 +4,7 @@
 	<form action="register-process.php" method='post'>
 	  <div class='form-group'>
 	    <label for='email'>Email address</label>
-	    <input type='email' class='form-control' name='email' id='email' aria-describedby='emailHelp' placeholder='Email'>
+	    <input type='email' class='form-control' name='email' id='email' placeholder='Email'>
 	  </div>
 	  <div class='form-group'>
 	    <label for='pass1'>Password</label>

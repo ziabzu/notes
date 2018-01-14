@@ -1,104 +1,93 @@
 <?php
-	session_start();
-
+    session_start();
+    
     require_once '../database/database.class.php';
     require_once '../database/auth.class.php';
     require_once '../database/user.class.php';
     require_once '../database/note.class.php';
     require_once '../lib/helper.class.php';
 
-	$noteData = json_decode($_REQUEST['data'], true);
-	$noteData = $noteData[0];
+    $noteData = json_decode($_REQUEST['data'], true);
+    $noteData = $noteData[0];
 
-	$action = $noteData['action'];
+    $action = $noteData['action'];
 
-	$result['status'] = false;
+    $result['status'] = false;
 
-	switch ($action) {
+switch ($action) {
+    // Load notes when page loads
+    case 'load':
+        $note = new Note();
 
-		// Load notes when page loads
-		case 'load':
+        $data = array();
 
-			$note = new Note();
+        if (Auth::isLoggedIn() && ($res = $note->load())) {
+            while ($row = $res->fetch_object()) {
+                $data[] = array(
+                    'id' => $row->id,
+                    'createdDate' => Helper::timeToString($row->created_date),
+                    'userId' =>$row->user_id, 'text' => $row->text
+                );
+            }
 
-			$data = array();
+            $status = true;
+            $description = "Loaded successfully";
+        } else {
+            $status = false;
+            $description = "User not logged in";
+        }
 
-			if (Auth::isLoggedIn() && ($res = $note->load())) {
+        $result['status'] = $status;
+        $result['description'] = $description;
+        $result['data'] = (array) $data;
 
-				while ($row = $res->fetch_object()) {
+        break;
 
-					$data[] = array(
-						'id' => $row->id, 
-						'createdDate' => Helper::timeToString($row->created_date), 
-						'userId' =>$row->user_id, 'text' => $row->text
-					);
+    // Add note asynchronously
+    case 'save-new':
+        $note = new Note();
+        $note->text = $noteData['text'];
 
-			    }
-
-			    $status = true;
-			    $description = "Loaded successfully";
-
-			} else {
-
-				$status = false;
-				$description = "User not logged in";
-
-			}
-
-			$result['status'] = $status;
-			$result['description'] = $description;
-			$result['data'] = (array) $data;
-
-			break;
-
-		// Add note asynchronously
-		case 'save-new':
-
-		    $note = new Note();
-		    $note->text = $noteData['text'];
-
-			$res = $note->save();
+        $res = $note->save();
 
 
-			$result['status'] = $res['status'];
-			$result['description'] = 'Saved successfully';
+        $result['status'] = $res['status'];
+        $result['description'] = 'Saved successfully';
 
-			$result['data']['id'] = $res['mysql_insert_id'];
+        $result['data']['id'] = $res['mysql_insert_id'];
 
-			$now = new DateTime();
-			$result['data']['createdDate'] = Helper::timeToString($now->format('Y-m-d H:i:s'));
-			
-			break;
+        $now = new DateTime();
+        $result['data']['createdDate'] = Helper::timeToString($now->format('Y-m-d H:i:s'));
+            
+        break;
 
-		//Edit note asynchronously	
-		case 'save-edit':
+    //Edit note asynchronously
+    case 'save-edit':
+        $note = new Note($noteData['id']);
+        $note->text = $noteData['text'];
 
-		    $note = new Note($noteData['id']);
-		    $note->text = $noteData['text'];
+        $res = $note->save();
 
-			$res = $note->save();
+        $result['status'] = $res['status'];
+        $result['data']['id'] = $noteData['id'];
+        $result['description'] = 'Saved successfully';
 
-			$result['status'] = $res['status'];
-			$result['data']['id'] = $noteData['id'];
-			$result['description'] = 'Saved successfully';
+        break;
 
-			break;
-
-		//Delete note asynchronously	
-		case 'delete':
-
-		    $note = new Note($noteData['id']);
-			$result['status'] = $note->delete();
-			$result['description'] = 'Deleted successfully';
-			
-			break;
-		
-		default:
-			# code...
-			break;
-	}
+    //Delete note asynchronously
+    case 'delete':
+        $note = new Note($noteData['id']);
+        $result['status'] = $note->delete();
+        $result['description'] = 'Deleted successfully';
+            
+        break;
+        
+    default:
+        # code...
+        break;
+}
 
 
-	echo json_encode((array) $result);
+    echo json_encode((array) $result);
 
-	die();
+    die();
