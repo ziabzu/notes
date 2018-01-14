@@ -1,3 +1,4 @@
+<script src="js/user.js"></script>
 <h2>Register</h2>
 <div class='container-fluid'>
 

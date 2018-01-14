@@ -103,12 +103,13 @@ var Note = (function () {
                                     + "<a href='#' class='btn btn-default' onclick='Note.deleteNote(" + data['id'] + ")'>"
                                       + "<span class='glyphicon glyphicon-trash'></span>"
                                     + "</a>"
-                                    + "&nbsp;&nbsp;<span class='small text-muted'>" + data['createdDate'] + "</span>"
                                   + "</div>"
 
                                 + "&nbsp;&nbsp;<span id='note-text-" + data['id'] + "'>" + text + "</span>&nbsp;"
+                                + "&nbsp;&nbsp;<span class='small text-muted text-right'>" + data['createdDate'] + "</span>"
 
                               + "</div>"
+
                         + "</div>"
                     + "</span>"
                     + "<span class='note-edit'>"
