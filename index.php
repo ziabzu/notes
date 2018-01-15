@@ -12,6 +12,7 @@
 
     ?>
 
+    <div class="loader center-block"></div>
     <ul class="list-group" id='notes-list'></ul>
 
 </div>

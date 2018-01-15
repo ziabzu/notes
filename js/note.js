@@ -37,7 +37,6 @@ var Note = (function () {
 
                             $('#notes-list').prepend(html).fadeIn('slow');
                             $('#note').val('');
-                            
                         } else { // Edited one saved
                             $('#note-text-' + id).html(text);
                             cancelEdit(id);
@@ -89,10 +88,11 @@ var Note = (function () {
    
     }
 
-    function getNoteRowHTML(data, text)
+    function getNoteRowHTML(data, text, alternative)
     {
 
-        return "<li class='list-group-item' id='note-" + data['id'] + "'>"
+
+        return "<li class='list-group-item" + (alternative % 2 ? " list-group-item-info" : "") + "' id='note-" + data['id'] + "'>"
 
                     + "<span class='note-view'>"
                         + "<div class='media'>"
@@ -102,13 +102,14 @@ var Note = (function () {
                                     + "<a href='#' onclick='Note.setEditNote(" + data['id'] + ");' class='btn btn-default'>"
                                         + "<span class='glyphicon glyphicon-pencil'></span>"
                                     + "</a>"
-                                    + "<a href='#' class='btn btn-default' onclick='Note.deleteNote(" + data['id'] + ")'>"
+                                    + "<a href='#' class='btn btn-default btn-danger' data-toggle='tooltip' "
+                                            + "data-placement='left' title='Delete this note!' onclick='Note.deleteNote(" + data['id'] + ")'>"
                                       + "<span class='glyphicon glyphicon-trash'></span>"
                                     + "</a>"
                                   + "</div>"
 
                                 + "&nbsp;&nbsp;<span id='note-text-" + data['id'] + "'>" + text + "</span>&nbsp;"
-                                + "&nbsp;&nbsp;<span class='small text-muted text-right'>" + data['createdDate'] + "</span>"
+                                + "&nbsp;&nbsp;<div class='small text-muted text-right'>" + data['createdDate'] + "</div>"
 
                               + "</div>"
 
@@ -117,8 +118,10 @@ var Note = (function () {
                     + "<span class='note-edit'>"
 
                         + "<textarea class='form-control edit-note-input' rows='2'></textarea>"
-                          + "<button type='button' class='btn btn-primary btn-xs' onclick='Note.saveNote(\"save-edit\", " + data['id'] + ");'>Save Note</button>&nbsp;"
-                          + "<button type='button' class='btn btn-xs' onclick='Note.cancelEdit(" + data['id'] + ");'>Cancel Editing</button>"
+                          + "<button type='button' class='btn btn-primary btn-xs' onclick='Note.saveNote(\"save-edit\", " + data['id'] + ");'>"
+                            + "<i class='glyphicon glyphicon-floppy-saved'></i>&nbsp;Save Note</button>&nbsp;"
+                          + "<button type='button' class='btn btn-xs' onclick='Note.cancelEdit(" + data['id'] + ");'>"
+                            + "<i class='glyphicon glyphicon-remove'></i>&nbsp;Cancel Editing</button>"
 
                     + "</span>"
 
@@ -149,20 +152,23 @@ var Note = (function () {
                     if (data['status']) {
                         var html = '';
 
+                        var i = 0;
                         // here is the code to draw html from returned json
                         $.each(
                             data['data'],
                             function (index, row) {
 
-                                html = html + getNoteRowHTML(row, row.text);
+                                html = html + getNoteRowHTML(row, row.text, i++);
 
                             }
                         );
 
+                        $('.loader').slideUp('slow');
+
                         $('#notes-list')
                             .hide()
                             .html(html)
-                            .fadeIn(1000);
+                            .fadeIn(2000);
                     } else {
                         // Write here some laoding error message
                     }
